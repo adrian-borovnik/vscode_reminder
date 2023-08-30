@@ -4,19 +4,26 @@
 	"description": "",
 	"version": "0.0.1",
 	"publisher": "adrian-borovnik",
+	"repository": "https://github.com/adrian-borovnik/vscode_reminder",
 	"engines": {
 		"vscode": "^1.81.0"
 	},
 	"categories": [
 		"Other"
 	],
-	"activationEvents": [],
+	"activationEvents": [
+		"onStartupFinished"
+	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "reminder.helloWorld",
-				"title": "Hello World"
+				"command": "reminder.toggleReminder",
+				"title": "Toggle reminder"
+			},
+			{
+				"command": "reminder.changeInterval",
+				"title": "Change interval"
 			}
 		]
 	},

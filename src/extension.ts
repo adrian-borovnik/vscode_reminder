@@ -1,25 +1,52 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode'
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "reminder" is now active!')
-	vscode.window.showInformationMessage('Congratulations, your extension "reminder" is now active!')
+	let isRunning = true
+	let minutes = 30
+	let interval = initInterval(minutes)
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('reminder.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Reminder!')
+	let toggleReminder = vscode.commands.registerCommand('reminder.toggleReminder', () => {
+		isRunning = !isRunning
+		if (isRunning) {
+			interval = initInterval(minutes)
+			vscode.window.showInformationMessage('Reminder is on!')
+		} else {
+			clearInterval(interval)
+			vscode.window.showInformationMessage('Reminder is off...')
+		}
 	})
 
-	context.subscriptions.push(disposable)
+	let changeInterval = vscode.commands.registerCommand('reminder.changeInterval', () => {
+		vscode.window.showInputBox({ prompt: 'Enter the new interval duration in minutes' }).then((value) => {
+			if (value) {
+				minutes = parseInt(value)
+				clearInterval(interval)
+				interval = initInterval(minutes)
+				vscode.window.showInformationMessage('Interval duration changed to ' + minutes + ' minutes.')
+			}
+		})
+	})
+
+	context.subscriptions.push(toggleReminder)
+	context.subscriptions.push(changeInterval)
+}
+
+function initInterval(minutes: number = 30) {
+	return setInterval(() => {
+		const date = new Date()
+		const time = date.getHours() + ':' + date.getMinutes()
+
+		const messages = ["Don't forget to merge with the develop branch...", "It's time to merge with the develop branch.", 'Develop branch waits to be merged.', 'Can you even merge develop bro?', 'Imagine not merging with the develop branch...', 'Only a fool would not merge the develop branch...', "You're not gonna merge with the develop branch, are you?"]
+
+		const message = messages[Math.floor(Math.random() * messages.length)]
+
+		vscode.window.showInformationMessage(message, 'Merge', 'Cancel').then((value) => {
+			if (value === 'Merge') {
+				// run git merge origin/develop in the console
+				vscode.window.showInformationMessage('Merging...')
+			}
+		})
+	}, 1000 * 60 * minutes)
 }
 
 // This method is called when your extension is deactivated
