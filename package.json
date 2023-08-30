@@ -1,7 +1,7 @@
 {
 	"name": "reminder",
 	"displayName": "Reminder",
-	"description": "",
+	"description": "A reminder to merge with the develop branch",
 	"version": "0.0.1",
 	"publisher": "adrian-borovnik",
 	"repository": "https://github.com/adrian-borovnik/vscode_reminder",
