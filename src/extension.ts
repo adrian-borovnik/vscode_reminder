@@ -3,6 +3,9 @@ import * as vscode from 'vscode'
 export function activate(context: vscode.ExtensionContext) {
 	let isRunning = true
 	let minutes = 30
+
+	if (isRunning) vscode.window.showInformationMessage(`Merge Reminder is running on ${minutes} minutes interval.`)
+
 	let interval = initInterval(minutes)
 
 	let toggleReminder = vscode.commands.registerCommand('reminder.toggleReminder', () => {
