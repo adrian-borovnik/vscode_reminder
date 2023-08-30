@@ -1,6 +1,6 @@
 {
-	"name": "reminder",
-	"displayName": "Reminder",
+	"name": "merge-reminder",
+	"displayName": "Merge Reminder",
 	"description": "A reminder to merge with the develop branch",
 	"version": "0.0.1",
 	"publisher": "adrian-borovnik",
